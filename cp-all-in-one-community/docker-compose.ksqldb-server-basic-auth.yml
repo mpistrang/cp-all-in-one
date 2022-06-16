@@ -1,0 +1,12 @@
+---
+version: '2'
+services:
+  ksqldb-server:
+    volumes:
+      - ./basic_auth_creds:/etc/confluent/basic_auth_creds
+      - ./jaas_config.file:/etc/confluent/jaas_config.file
+    environment:
+      KSQL_AUTHENTICATION_METHOD: "BASIC"
+      KSQL_AUTHENTICATION_REALM: "KsqlServer-Props"
+      KSQL_OPTS: "-Djava.security.auth.login.config=/etc/confluent/jaas_config.file -Dauthentication.skip.paths=/healthcheck"
+      KSQL_AUTHENTICATION_ROLES: "users"
